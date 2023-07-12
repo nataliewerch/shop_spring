@@ -2,6 +2,7 @@ package com.example.shopspring.repository;
 
 import com.example.shopspring.model.Client;
 import com.example.shopspring.model.Product;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
@@ -12,6 +13,8 @@ import java.util.List;
 @Repository
 public class ClientRepositoryImpl implements ClientRepository {
 
+    @Autowired
+    private ProductRepository productRepository;
     private HashMap<Integer, Client> clientMap = new HashMap<>();
 
     @PostConstruct
@@ -42,13 +45,32 @@ public class ClientRepositoryImpl implements ClientRepository {
     }
 
     @Override
-    public void addProductToBasket(Client client, Product product) {
-        client.getBasket().add(product);
+    public void addProductToBasket(int clientId, int productId) {
+        Client client = clientMap.get(clientId);
+        Product product = productRepository.getByIdProduct(productId);
+        if (!clientMap.containsKey(clientId)) {
+            System.out.println("Client with id " + clientId + " not found");
+            return;
+        }
+        if (product == null) {
+            System.out.println("Product with id " + productId + " not found");
+            return;
+        }
+        client.getProductList().add(product);
     }
 
     @Override
-    public void removeProductFromBasket(Client client, Product product) {
-        client.getBasket().remove(product);
+    public void removeProductFromBasket(int clientId, int productId) {
+        if (!clientMap.containsKey(clientId)) {
+            System.out.println("Client with id = " + clientId + " not found");
+            return;
+        }
+        Client client = clientMap.get(clientId);
+        Product product = productRepository.getByIdProduct(productId);
+        if (!client.getProductList().contains(product)) {
+            System.out.println("Product with id = " + productId + " by client " + client.getName() + " " + client.getLastname() + " not found");
+            return;
+        }
+        client.getProductList().remove(product);
     }
-
 }

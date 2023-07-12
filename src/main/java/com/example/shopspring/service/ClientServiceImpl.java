@@ -1,7 +1,6 @@
 package com.example.shopspring.service;
 
 import com.example.shopspring.model.Client;
-import com.example.shopspring.model.Product;
 import com.example.shopspring.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,12 +49,14 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public void addProductToBasket(Client client, Product product) {
-        repository.addProductToBasket(client, product);
+    public void addProductToBasket(int clientId, int productId) {
+        repository.addProductToBasket(clientId, productId);
     }
 
     @Override
-    public void removeProductFromBasket(Client client, Product product) {
-        repository.removeProductFromBasket(client, product);
+    public void removeProductFromBasket(int clientId, int productId) {
+        repository.removeProductFromBasket(clientId, productId);
     }
+
+
 }

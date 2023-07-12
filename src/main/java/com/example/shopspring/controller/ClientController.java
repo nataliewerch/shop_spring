@@ -1,9 +1,7 @@
 package com.example.shopspring.controller;
 
 import com.example.shopspring.model.Client;
-import com.example.shopspring.model.Product;
 import com.example.shopspring.service.ClientService;
-import com.example.shopspring.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +13,6 @@ public class ClientController {
 
     @Autowired
     private ClientService clientService;
-    @Autowired
-    private ProductService productService;
 
     @GetMapping
     public List<Client> getAll() {
@@ -35,15 +31,11 @@ public class ClientController {
 
     @PostMapping("/{clientId}/add/{productId}")
     public void addProductToBasket(@PathVariable(name = "clientId") int clientId, @PathVariable(name = "productId") int productId) {
-        Client client = clientService.getById(clientId);
-        Product product = productService.getById(productId);
-        clientService.addProductToBasket(client, product);
+        clientService.addProductToBasket(clientId, productId);
     }
 
     @DeleteMapping("/{clientId}/remove/{productId}")
-    public void removeProductToBasket(@PathVariable(name = "clientId") int clientId, @PathVariable(name = "productId") int productId) {
-        Client client = clientService.getById(clientId);
-        Product product = productService.getById(productId);
-        clientService.removeProductFromBasket(client, product);
+    public void removeProductFromBasket(@PathVariable(name = "clientId") int clientId, @PathVariable(name = "productId") int productId) {
+        clientService.removeProductFromBasket(clientId, productId);
     }
 }

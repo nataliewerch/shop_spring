@@ -1,16 +1,20 @@
 package com.example.shopspring.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Client {
     private int id;
     private String name;
     private String lastname;
-    private Basket basket;
+
+    private List<Product> productList;
 
     public Client(int id, String name, String lastname) {
         this.id = id;
         this.name = name;
         this.lastname = lastname;
-        this.basket = new Basket();
+        this.productList = new ArrayList<>();
 
     }
 
@@ -42,12 +46,12 @@ public class Client {
         this.lastname = lastname;
     }
 
-    public Basket getBasket() {
-        return basket;
+    public List<Product> getProductList() {
+        return productList;
     }
 
-    public void setBasket(Basket basket) {
-        this.basket = basket;
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
     }
 
     @Override
@@ -56,7 +60,7 @@ public class Client {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", lastname='" + lastname + '\'' +
-                ", basket=" + basket +
+                ", productList=" + productList +
                 '}';
     }
 }
